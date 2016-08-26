@@ -15,6 +15,7 @@
 	'enableAjaxValidation'=>false,
 )); ?>
 
+	<?php echo $form->hiddenField($model, 'create_at'); ?>
 	<p class="note">Fields with <span class="required">*</span> are required.</p>
 
 	<?php echo $form->errorSummary($model); ?>
@@ -32,44 +33,33 @@
 	</div>
 
 	<div class="row">
+		<?php echo $form->labelEx($model,'repeat_password'); ?>
+		<?php echo $form->passwordField($model,'repeat_password',array('size' => 60, 'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'repeat_password'); ?>
+	</div>
+
+	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'email'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'activkey'); ?>
-		<?php echo $form->textField($model,'activkey',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'activkey'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'create_at'); ?>
-		<?php echo $form->textField($model,'create_at'); ?>
-		<?php echo $form->error($model,'create_at'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'lastvisit'); ?>
-		<?php echo $form->textField($model,'lastvisit'); ?>
-		<?php echo $form->error($model,'lastvisit'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'superuser'); ?>
-		<?php echo $form->textField($model,'superuser'); ?>
+		<?php echo $form->dropDownList($model,'superuser', array('0' => 'No', 1 => 'Yes', )); ?>
 		<?php echo $form->error($model,'superuser'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'status'); ?>
-		<?php echo $form->textField($model,'status'); ?>
+		<?php echo $form->dropDownList($model,'status', array('0' => 'Inactive', 1 => 'Active',  )); ?>
+
 		<?php echo $form->error($model,'status'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'gender'); ?>
-		<?php echo $form->textField($model,'gender'); ?>
+		<?php echo $form->dropDownList($model,'gender', array('0' => 'Female', 1 => 'Male')); ?>
 		<?php echo $form->error($model,'gender'); ?>
 	</div>
 

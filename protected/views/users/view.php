@@ -23,13 +23,22 @@ $this->menu=array(
 	'attributes'=>array(
 		'id',
 		'username',
-		'password',
+//		'password',
 		'email',
-		'activkey',
+//		'activkey',
 		'create_at',
 		'lastvisit',
-		'superuser',
-		'status',
-		'gender',
+		array(
+			'name' => 'superuser',
+			'value' => $model->superuser == 1 ? 'Yes' : 'No'
+		),
+		array(
+			'name' => 'status',
+			'value' => $model->status == 1 ? 'Active' : 'Inactive'
+		),
+		array(
+			'name' => 'gender',
+			'value' => $model->gender == 1 ? 'Male' : 'Female'
+		),
 	),
 )); ?>

@@ -7,7 +7,7 @@
 // CWebApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Viễn Tin',
+	'name'=>'TPS Inventory System',
 	'timeZone' => 'Asia/Ho_Chi_Minh',
 	// preloading 'log' component
 	'preload'=>array('log'),
@@ -77,7 +77,7 @@ return array(
 			'debug'=>false,
 		),
 	),
-	'defaultController'=>'promote/view',
+	'defaultController'=>'dashboard',
 	// application components
 	'components'=>array(
 		'format' => array(

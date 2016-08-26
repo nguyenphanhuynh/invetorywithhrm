@@ -40,6 +40,12 @@ class UsersController extends BaseController
 			$model->attributes=$_POST['User'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
+		} else {
+			// Init data when create new user
+			$model->status = true;
+			$model->gender = 1;
+			$model->superuser = 0;
+			$model->create_at = date('Y-m-d H:i:s');
 		}
 
 		$this->render('create',array(

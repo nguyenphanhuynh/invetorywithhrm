@@ -20,6 +20,12 @@
  */
 class User extends CActiveRecord
 {
+	// holds the password confirmation word
+	public $repeat_password;
+
+	//will hold the encrypted password for update actions.
+	public $initialPassword;
+
 	/**
 	 * @return string the associated database table name
 	 */
@@ -36,6 +42,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
+			//password and repeat password
+			array('password, repeat_password', 'required', 'on'=>'insert'),
+			array('password, repeat_password', 'length', 'min'=>6, 'max'=>40),
+			array('password', 'compare', 'compareAttribute'=>'repeat_password'),
+
 			array('username, password, email, create_at', 'required'),
 			array('superuser, status, gender', 'numerical', 'integerOnly'=>true),
 			array('username', 'length', 'max'=>20),
@@ -75,6 +86,7 @@ class User extends CActiveRecord
 			'superuser' => 'Superuser',
 			'status' => 'Status',
 			'gender' => 'Gender',
+			'repeat_password' => 'Confirm Password'
 		);
 	}
 
@@ -141,5 +153,40 @@ class User extends CActiveRecord
 	public function hashPassword($password)
 	{
 		return CPasswordHelper::hashPassword($password);
+	}
+
+	public function beforeSave()
+	{
+		// in this case, we will use the old hashed password.
+		if(empty($this->password) && empty($this->repeat_password) && !empty($this->initialPassword))
+			$this->password=$this->repeat_password=$this->initialPassword;
+
+		return parent::beforeSave();
+	}
+
+	public function afterFind()
+	{
+		//reset the password to null because we don't want the hash to be shown.
+		$this->initialPassword = $this->password;
+		$this->password = null;
+
+		parent::afterFind();
+	}
+
+	public function saveModel($data=array())
+	{
+		//because the hashes needs to match
+		if(!empty($data['password']) && !empty($data['repeat_password']))
+		{
+			$data['password'] = Yii::app()->user->hashPassword($data['password']);
+			$data['repeat_password'] = Yii::app()->user->hashPassword($data['repeat_password']);
+		}
+
+		$this->attributes=$data;
+
+		if(!$this->save())
+			return CHtml::errorSummary($this);
+
+		return true;
 	}
 }
