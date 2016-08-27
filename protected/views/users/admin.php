@@ -9,7 +9,7 @@ $this->breadcrumbs=array(
 ?>
 
 <h1>Manage Users</h1>
-<a href="<?php echo $this->createUrl('/users/create')?>" class="btn btn-default">Create</a>
+<a href="<?php echo $this->createUrl('/users/create')?>" class="btn btn-primary">Add new user</a>
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'user-grid',
 	'dataProvider'=>$model->search(),
@@ -34,12 +34,7 @@ $this->breadcrumbs=array(
 		array(
 			'class'=>'CButtonColumn',
 			'headerHtmlOptions' => array('style' => 'width: 70px;'),
-			'template' => '{change_password}{view}{delete}',
-			'buttons' => array(
-				'change_password' => array(
-					'label' => '<a href="#" type="button"><span class="glyphicon glyphicon-refresh custom_grid_btn" title="Change Password"></span></a>'
-				),
-			)
+			'template' => '{update}{view}{delete}',
 		),
 	),
 )); ?>

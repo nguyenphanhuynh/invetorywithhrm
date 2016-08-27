@@ -29,10 +29,6 @@ $this->menu=array(
 		'create_at',
 		'lastvisit',
 		array(
-			'name' => 'superuser',
-			'value' => $model->superuser == 1 ? 'Yes' : 'No'
-		),
-		array(
 			'name' => 'status',
 			'value' => $model->status == 1 ? 'Active' : 'Inactive'
 		),

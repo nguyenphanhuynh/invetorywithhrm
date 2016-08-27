@@ -1,15 +1,14 @@
 <?php
 
-class UsersController extends BaseController
+class TpsdevicesController extends BaseController
 {
-
 	/**
 	 * @return array action filters
 	 */
 	public function filters()
 	{
 		return array(
-			'rights',
+			'rights'
 		);
 	}
 
@@ -30,27 +29,22 @@ class UsersController extends BaseController
 	 */
 	public function actionCreate()
 	{
-		$model=new User('insert');
-		$roles = array();
+		$model=new Tpsdevices;
+
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['User']))
+		if(isset($_POST['Tpsdevices']))
 		{
-			$model->attributes=$_POST['User'];
-			if($model->save()) {
+			$model->attributes=$_POST['Tpsdevices'];
+			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
-			}
 		} else {
-			// Init data when create new user
-			$model->status = true;
-			$model->gender = 1;
-			$model->create_at = date('Y-m-d H:i:s');
+			$model->price = 0;
 		}
 
 		$this->render('create',array(
 			'model'=>$model,
-			'roles' => $roles
 		));
 	}
 
@@ -62,14 +56,13 @@ class UsersController extends BaseController
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-		$model->password = '';
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['User']))
+		if(isset($_POST['Tpsdevices']))
 		{
-			$model->attributes=$_POST['User'];
+			$model->attributes=$_POST['Tpsdevices'];
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
@@ -94,14 +87,25 @@ class UsersController extends BaseController
 	}
 
 	/**
+	 * Lists all models.
+	 */
+	public function actionIndex()
+	{
+		$dataProvider=new CActiveDataProvider('Tpsdevices');
+		$this->render('index',array(
+			'dataProvider'=>$dataProvider,
+		));
+	}
+
+	/**
 	 * Manages all models.
 	 */
 	public function actionAdmin()
 	{
-		$model=new User('search');
+		$model=new Tpsdevices('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['User']))
-			$model->attributes=$_GET['User'];
+		if(isset($_GET['Tpsdevices']))
+			$model->attributes=$_GET['Tpsdevices'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -112,12 +116,12 @@ class UsersController extends BaseController
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return User the loaded model
+	 * @return Tpsdevices the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=User::model()->findByPk($id);
+		$model=Tpsdevices::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -125,11 +129,11 @@ class UsersController extends BaseController
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param User $model the model to be validated
+	 * @param Tpsdevices $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='user-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='tpsdevices-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

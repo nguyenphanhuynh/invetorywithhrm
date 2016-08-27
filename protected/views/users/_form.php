@@ -2,6 +2,8 @@
 /* @var $this UsersController */
 /* @var $model User */
 /* @var $form CActiveForm */
+/* @var $roles Roles list */
+
 ?>
 
 <div class="form">
@@ -22,7 +24,10 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'username'); ?>
-		<?php echo $form->textField($model,'username',array('size'=>20,'maxlength'=>20)); ?>
+		<?php echo $form->textField($model,'username',array(
+			'size'=>20,
+			'maxlength'=>20,
+			'disabled'=>($model->scenario == 'update') ? true : false)); ?>
 		<?php echo $form->error($model,'username'); ?>
 	</div>
 
@@ -42,12 +47,6 @@
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
 		<?php echo $form->error($model,'email'); ?>
-	</div>
-
-	<div class="row">
-		<?php echo $form->labelEx($model,'superuser'); ?>
-		<?php echo $form->dropDownList($model,'superuser', array('0' => 'No', 1 => 'Yes', )); ?>
-		<?php echo $form->error($model,'superuser'); ?>
 	</div>
 
 	<div class="row">

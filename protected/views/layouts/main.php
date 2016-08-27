@@ -35,6 +35,7 @@
 		$this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
 				array('label'=>Yii::t('app','Dashboard'), 'url'=>array('/dashboard/index'), 'visible'=>!Yii::app()->user->isGuest && Yii::app()->user->checkAccess('Dashboard.Index')),
+				array('label'=>Yii::t('app','Devices'), 'url'=>array('/tpsdevices/admin'), 'visible'=>!Yii::app()->user->isGuest && Yii::app()->user->checkAccess('TpsDevices.Admin')),
 				array('label'=>Yii::t('app','Users'), 'url'=>array('/users/admin'), 'visible'=>!Yii::app()->user->isGuest && Yii::app()->user->checkAccess('Users.Admin')),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)

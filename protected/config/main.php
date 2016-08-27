@@ -21,6 +21,7 @@ return array(
 		'application.modules.rights.*',
 		'application.modules.rights.components.*',
 		'application.controllers.BaseController',
+		'application.modules.rights.components.dataproviders.*',
 	),
 	'modules'=>array(
 		'gii'=>array(
@@ -106,7 +107,7 @@ return array(
 
 		'db'=>array(
 			// Local
-			'connectionString' => 'mysql:host=localhost;dbname=vientin02',
+			'connectionString' => 'mysql:host=localhost;dbname=tpsinventory',
 			'username' => 'root',
 			'password' => 'root',
 			// VienTin Server
