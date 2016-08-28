@@ -1,0 +1,450 @@
+-- phpMyAdmin SQL Dump
+-- version 4.4.10
+-- http://www.phpmyadmin.net
+--
+-- Host: localhost:3306
+-- Generation Time: Aug 28, 2016 at 06:57 PM
+-- Server version: 5.5.42-log
+-- PHP Version: 5.6.10
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `tpsinventory`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `authassignment`
+--
+
+CREATE TABLE `authassignment` (
+  `itemname` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `userid` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `bizrule` text COLLATE utf8_unicode_ci,
+  `data` text COLLATE utf8_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `authassignment`
+--
+
+INSERT INTO `authassignment` (`itemname`, `userid`, `bizrule`, `data`) VALUES
+('Admin', '1', NULL, 'N;'),
+('Authenticated', '1', NULL, 'N;'),
+('Authenticated', '2', NULL, 'N;'),
+('Promote.View', '2', NULL, 'N;');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `authitem`
+--
+
+CREATE TABLE `authitem` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` int(11) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `bizrule` text COLLATE utf8_unicode_ci,
+  `data` text COLLATE utf8_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `authitem`
+--
+
+INSERT INTO `authitem` (`name`, `type`, `description`, `bizrule`, `data`) VALUES
+('Admin', 2, NULL, NULL, 'N;'),
+('Authenticated', 2, NULL, NULL, 'N;'),
+('Guest', 2, 'Guest', NULL, 'N;'),
+('Promote.*', 1, NULL, NULL, 'N;'),
+('Promote.Admin', 0, NULL, NULL, 'N;'),
+('Promote.Create', 0, NULL, NULL, 'N;'),
+('Promote.Delete', 0, NULL, NULL, 'N;'),
+('Promote.Index', 0, NULL, NULL, 'N;'),
+('Promote.New', 0, NULL, NULL, 'N;'),
+('Promote.Update', 0, NULL, NULL, 'N;'),
+('Promote.Use', 0, NULL, NULL, 'N;'),
+('Promote.View', 0, NULL, NULL, 'N;'),
+('Requests.*', 1, NULL, NULL, 'N;'),
+('Requests.Admin', 0, NULL, NULL, 'N;'),
+('Requests.Create', 0, NULL, NULL, 'N;'),
+('Requests.Delete', 0, NULL, NULL, 'N;'),
+('Requests.Update', 0, NULL, NULL, 'N;'),
+('Requests.View', 0, NULL, NULL, 'N;'),
+('Settings.*', 1, NULL, NULL, 'N;'),
+('Settings.Admin', 0, NULL, NULL, 'N;'),
+('Settings.Create', 0, NULL, NULL, 'N;'),
+('Settings.Delete', 0, NULL, NULL, 'N;'),
+('Settings.Update', 0, NULL, NULL, 'N;'),
+('Settings.View', 0, NULL, NULL, 'N;'),
+('Site.*', 1, NULL, NULL, 'N;'),
+('Site.Error', 0, NULL, NULL, 'N;'),
+('Site.Index', 0, NULL, NULL, 'N;'),
+('Site.Login', 0, NULL, NULL, 'N;'),
+('Site.Logout', 0, NULL, NULL, 'N;'),
+('Users.*', 1, NULL, NULL, 'N;'),
+('Users.Admin', 0, NULL, NULL, 'N;'),
+('Users.Create', 0, NULL, NULL, 'N;'),
+('Users.Delete', 0, NULL, NULL, 'N;'),
+('Users.Update', 0, NULL, NULL, 'N;'),
+('Users.View', 0, NULL, NULL, 'N;');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `authitemchild`
+--
+
+CREATE TABLE `authitemchild` (
+  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `authitemchild`
+--
+
+INSERT INTO `authitemchild` (`parent`, `child`) VALUES
+('Authenticated', 'Promote.Create'),
+('Guest', 'Promote.Create'),
+('Authenticated', 'Promote.View'),
+('Authenticated', 'Site.*'),
+('Authenticated', 'Site.Error'),
+('Authenticated', 'Site.Index'),
+('Authenticated', 'Site.Login'),
+('Guest', 'Site.Login'),
+('Authenticated', 'Site.Logout');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `customer`
+--
+
+CREATE TABLE `customer` (
+  `id` int(11) NOT NULL,
+  `lang` varchar(45) COLLATE utf8_unicode_ci DEFAULT 'eng',
+  `is_logged` int(11) NOT NULL DEFAULT '1',
+  `customer_id` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `first_name` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `last_name` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `username` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `gender` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `birth_date` datetime DEFAULT NULL,
+  `phone` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `phone_prefix` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `email` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `mac_address` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `customer`
+--
+
+INSERT INTO `customer` (`id`, `lang`, `is_logged`, `customer_id`, `first_name`, `last_name`, `username`, `gender`, `birth_date`, `phone`, `phone_prefix`, `email`, `mac_address`) VALUES
+(1, 'eng', 0, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `hotspot`
+--
+
+CREATE TABLE `hotspot` (
+  `id` int(11) NOT NULL,
+  `hotspot_id` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `identifier` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `name` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `latitude` decimal(18,10) DEFAULT NULL,
+  `longitude` decimal(18,10) DEFAULT NULL,
+  `mac_address` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `state` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `zip` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `city` varchar(128) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `tag` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `hotspot`
+--
+
+INSERT INTO `hotspot` (`id`, `hotspot_id`, `identifier`, `name`, `latitude`, `longitude`, `mac_address`, `state`, `zip`, `city`, `tag`) VALUES
+(1, NULL, 'bienson010', 'bienson01', '16.0697307587', '108.1999053955', '23eb23b2b2b1', 'hai chau', 'hai chau', 'Da Nang, Vietnam', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profiles`
+--
+
+CREATE TABLE `profiles` (
+  `user_id` int(11) NOT NULL,
+  `lastname` varchar(50) NOT NULL DEFAULT '',
+  `firstname` varchar(50) NOT NULL DEFAULT ''
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `profiles`
+--
+
+INSERT INTO `profiles` (`user_id`, `lastname`, `firstname`) VALUES
+(1, 'Admin', 'Administrator');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `profiles_fields`
+--
+
+CREATE TABLE `profiles_fields` (
+  `id` int(10) NOT NULL,
+  `varname` varchar(50) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `field_type` varchar(50) NOT NULL,
+  `field_size` varchar(15) NOT NULL DEFAULT '0',
+  `field_size_min` varchar(15) NOT NULL DEFAULT '0',
+  `required` int(1) NOT NULL DEFAULT '0',
+  `match` varchar(255) NOT NULL DEFAULT '',
+  `range` varchar(255) NOT NULL DEFAULT '',
+  `error_message` varchar(255) NOT NULL DEFAULT '',
+  `other_validator` varchar(5000) NOT NULL DEFAULT '',
+  `default` varchar(255) NOT NULL DEFAULT '',
+  `widget` varchar(255) NOT NULL DEFAULT '',
+  `widgetparams` varchar(5000) NOT NULL DEFAULT '',
+  `position` int(3) NOT NULL DEFAULT '0',
+  `visible` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `profiles_fields`
+--
+
+INSERT INTO `profiles_fields` (`id`, `varname`, `title`, `field_type`, `field_size`, `field_size_min`, `required`, `match`, `range`, `error_message`, `other_validator`, `default`, `widget`, `widgetparams`, `position`, `visible`) VALUES
+(1, 'lastname', 'Last Name', 'VARCHAR', '50', '3', 1, '', '', 'Incorrect Last Name (length between 3 and 50 characters).', '', '', '', '', 1, 3),
+(2, 'firstname', 'First Name', 'VARCHAR', '50', '3', 1, '', '', 'Incorrect First Name (length between 3 and 50 characters).', '', '', '', '', 0, 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rights`
+--
+
+CREATE TABLE `rights` (
+  `itemname` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` int(11) NOT NULL,
+  `weight` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `settings`
+--
+
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL,
+  `setting_key` varchar(256) COLLATE utf8_unicode_ci NOT NULL,
+  `setting_value` varchar(8000) COLLATE utf8_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `settings`
+--
+
+INSERT INTO `settings` (`id`, `setting_key`, `setting_value`) VALUES
+(1, 'promote_top_content', '<p style="box-sizing: border-box; margin: 2px; color: #333333; font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px; text-align: center;">C&aacute;m ơn {{customer.first_name}} {{customer.last_name}}!</p>\r\n<p style="box-sizing: border-box; margin: 2px; color: #333333; font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px; text-align: center;">Bạn đ&atilde; đăng nhập th&agrave;nh c&ocirc;ng.</p>\r\n<p style="box-sizing: border-box; margin: 2px; color: #333333; font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px; text-align: center;">Sử dụng Coupon dưới đ&acirc;y để được giảm gi&aacute; 20% thức ăn tại {{tenant.name}}</p>'),
+(2, 'promote_bottom_content', '<p><span style="color: #333333; font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold;">Quy định:</span></p>\r\n<p style="box-sizing: border-box; margin: 2px; color: #333333; font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px;">- Đọc m&atilde; v&agrave; số điện thoại/email của bạn tại quầy thu ng&acirc;n để đối chứng nhận giảm gi&aacute;</p>\r\n<p style="box-sizing: border-box; margin: 2px; color: #333333; font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px;">- Mỗi m&atilde; chỉ c&oacute; gi&aacute; trị sử dụng 1 lần duy nhất</p>\r\n<p style="box-sizing: border-box; margin: 2px; color: #333333; font-family: ''Helvetica Neue'', Helvetica, Arial, sans-serif; font-size: 14px;">- Khuyến m&atilde;i giảm gi&aacute; kh&ocirc;ng c&oacute; gi&aacute; trị quy đổi th&agrave;nh tiền mặt</p>');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tpsdevices`
+--
+
+CREATE TABLE `tpsdevices` (
+  `id` int(11) NOT NULL,
+  `device_name` varchar(128) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `picutre` varchar(256) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `add_date` date DEFAULT NULL,
+  `price` decimal(18,2) DEFAULT '0.00'
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `tpsdevices`
+--
+
+INSERT INTO `tpsdevices` (`id`, `device_name`, `description`, `picutre`, `add_date`, `price`) VALUES
+(1, 'iPhone 5S', 'Black - 16GB', '', '2016-08-27', '0.00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `username` varchar(20) NOT NULL,
+  `password` varchar(128) NOT NULL,
+  `email` varchar(128) NOT NULL,
+  `activkey` varchar(128) NOT NULL DEFAULT '',
+  `create_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `lastvisit` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `status` int(1) NOT NULL DEFAULT '0',
+  `gender` int(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `username`, `password`, `email`, `activkey`, `create_at`, `lastvisit`, `status`, `gender`) VALUES
+(1, 'admin', '$2a$10$JTJf6/XqC94rrOtzuF397OHa4mbmZrVTBOQCmYD9U.obZRUut4BoC', 'webmaster@example.com', '9a24eff8c15a6a141ece27eb6947da0f', '2016-05-08 09:46:39', '0000-00-00 00:00:00', 1, 0),
+(8, 'huynh.nguyen', '$2y$13$P1OvCRbZ3QBH7m3udvWSXOQrLUMaHIrGgXF2Ks.jodk1oXpphCCnO', 'huynh.nguyen@tpssoft.com', '', '2016-08-27 06:42:44', '0000-00-00 00:00:00', 1, 1);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `authassignment`
+--
+ALTER TABLE `authassignment`
+  ADD PRIMARY KEY (`itemname`,`userid`);
+
+--
+-- Indexes for table `authitem`
+--
+ALTER TABLE `authitem`
+  ADD PRIMARY KEY (`name`);
+
+--
+-- Indexes for table `authitemchild`
+--
+ALTER TABLE `authitemchild`
+  ADD PRIMARY KEY (`parent`,`child`),
+  ADD KEY `child` (`child`);
+
+--
+-- Indexes for table `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `hotspot`
+--
+ALTER TABLE `hotspot`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `profiles`
+--
+ALTER TABLE `profiles`
+  ADD PRIMARY KEY (`user_id`);
+
+--
+-- Indexes for table `profiles_fields`
+--
+ALTER TABLE `profiles_fields`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `varname` (`varname`,`widget`,`visible`);
+
+--
+-- Indexes for table `rights`
+--
+ALTER TABLE `rights`
+  ADD PRIMARY KEY (`itemname`);
+
+--
+-- Indexes for table `settings`
+--
+ALTER TABLE `settings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `tpsdevices`
+--
+ALTER TABLE `tpsdevices`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `username` (`username`),
+  ADD UNIQUE KEY `email` (`email`),
+  ADD KEY `status` (`status`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `customer`
+--
+ALTER TABLE `customer`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `hotspot`
+--
+ALTER TABLE `hotspot`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `profiles`
+--
+ALTER TABLE `profiles`
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `profiles_fields`
+--
+ALTER TABLE `profiles_fields`
+  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `settings`
+--
+ALTER TABLE `settings`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `tpsdevices`
+--
+ALTER TABLE `tpsdevices`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `authassignment`
+--
+ALTER TABLE `authassignment`
+  ADD CONSTRAINT `authassignment_ibfk_1` FOREIGN KEY (`itemname`) REFERENCES `AuthItem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `authitemchild`
+--
+ALTER TABLE `authitemchild`
+  ADD CONSTRAINT `authitemchild_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `AuthItem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `authitemchild_ibfk_2` FOREIGN KEY (`child`) REFERENCES `AuthItem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `profiles`
+--
+ALTER TABLE `profiles`
+  ADD CONSTRAINT `user_profile_id` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `rights`
+--
+ALTER TABLE `rights`
+  ADD CONSTRAINT `rights_ibfk_1` FOREIGN KEY (`itemname`) REFERENCES `AuthItem` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
